@@ -21,8 +21,9 @@ int main()
 
 	for (char m_Char : m_Input)
 	{ // place letters into the class, this will break it down into ascii and binary
-		m_Data.push_back(new EncodeData());
-		m_Data.at(m_Data.end()).SetupLetter(m_Char, 8);
+		EncodeData* m_TempEncode = new EncodeData();
+		m_TempEncode->SetupLetter(m_Char, 8);
+		m_Data.push_back(m_TempEncode);
 	}
 
 	//attach all binary values into a long line
@@ -49,22 +50,27 @@ int main()
 	
 	do
 	{
+		EncodeData* m_TempEncode = new EncodeData();
 		std::vector<int> m_NewBitBinary;
-		for (int m_I = 0; m_I < m_NewBit; m_I++)
+		for (int m_I = 0; m_I <= m_NewBit-1; m_I++)
 		{
 			m_NewBitBinary.push_back(m_BinaryLine.at(m_Counter));
 			m_Counter++;
 		}
-		if (m_BinaryLine.size() < m_NewBit)
+		if (m_NewBitBinary.size() < m_NewBit)
 		{
-			for (int m_J = m_BinaryLine.size(); m_J < m_NewBit; m_J++)
+			for (int m_J = m_BinaryLine.size(); m_J < m_NewBit-1; m_J++)
 				m_NewBitBinary.push_back(0);
 		}
-
-		m_EncodedData.push_back(new EncodeData());
-		m_EncodedData.end()->SetupBinary(m_NewBitBinary);
+		m_TempEncode->SetupBinary(m_NewBitBinary, m_NewBit);
+		m_EncodedData.push_back(m_TempEncode);
 
 	} while (m_Counter <= m_BinaryLine.size());
+
+	for (EncodeData* m_ED : m_EncodedData)
+	{
+		std::cout << m_ED->GetLetter();
+	}
 	//endcode into varied base
 
 	//display encode

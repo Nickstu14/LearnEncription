@@ -1,5 +1,6 @@
 #include "EncodeData.h"
 
+
 EncodeData::EncodeData()
 {
 	
@@ -19,7 +20,8 @@ void EncodeData::SetupLetter(char& _Char, int _BaseVal)
 
 void EncodeData::SetupBinary(std::vector<int> _Binary, int _BaseVal)
 {
-	BinaryToAscii(_Binary, _BaseVal);
+	SetNumber(BinaryToAscii(_Binary, _BaseVal));
+	SetLetter(AsciiToChar(GetNumber()));
 }
 
 int EncodeData::CharToAscii(char _Input)
@@ -61,22 +63,22 @@ std::vector<int> EncodeData::IntToBinary(int _Input)
 int EncodeData::BinaryToAscii(std::vector<int> _Binary, int _BaceVal)
 {
 	int m_DecimalNum = 0;
-	int m_I = 0;
-	int m_Remainder;
-	std::string m_Bits;
-	long m_LongBinary;
+	int m_Bace = 1;
 
-	for (int m_Bit : _Binary)
+	for (unsigned int m_I = _Binary.size() - 1; m_I >= 0; m_I--)
 	{
-		m_Bits += m_Bit;
+		m_DecimalNum += _Binary[m_I] * m_Bace;
+		m_Bace *= 2;
+
+		if (m_I == 0)
+			break;
 	}
 
-	//m_LongBinary = (long) m_Bits;
+	return m_DecimalNum;
+}
 
-	for (int m_Bit : _Binary)
-	{
-		m_Remainder = m_Bit % _BaceVal;
-	}
-
-	return 0;
+char EncodeData::AsciiToChar(int _Number)
+{
+	char m_Char = _Number;
+	return m_Char;
 }
