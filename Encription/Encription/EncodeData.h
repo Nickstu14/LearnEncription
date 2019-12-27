@@ -9,8 +9,12 @@ public:
 	EncodeData();
 	~EncodeData();
 
+	void SetupLetter(char& _char, int _BaseVal);
+	void SetupBinary(std::vector<int> _Binary, int _BaseVal);
+
 	int CharToAscii(char _Input);
 	std::vector<int> IntToBinary(int _Input);
+	int BinaryToAscii(std::vector<int> _Binary, int _BaceVal);
 
 	void SetLetter(char _val) { m_Letter = _val; }
 	void SetNumber(int _Val) { m_AsciiNumber = _Val; }
